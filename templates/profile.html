@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Donate Now</title>
+<title>Donate Now: </title>
 <meta charset="utf-8">
 <link rel="stylesheet" href="static/css/reset.css" type="text/css" media="all">
 <link rel="stylesheet" href="static/css/layout.css" type="text/css" media="all">
@@ -29,27 +29,20 @@
     <!-- header -->
     <header>
       <div class="wrapper">
-       
+        <h1><a href="{{ url_for('index_page') }}" >Donate Now {{ username }}</a></h1>
         <nav>
           <ul id="top_nav">
             <li><p>{{ day }}</p></li>
             <li><a href="index"><img src="static/images/top_icon1.gif" alt=""></a></li>
             <li><a href="#"><img src="static/images/top_icon2.gif" alt=""></a></li>
-            
           </ul>
         </nav>
         <nav>
           <a href="{{ url_for('index_page') }}" ><img src="static/images/logo.png" style="height: 100px; width: 144px; float: left; margin-bottom: 30px;" alt="donate"></a>
           <ul id="menu">
             <li id="menu_active"><a href="{{ url_for('index_page') }}">Home</a></li>
-            
-            {% if not current_user.is_authenticated %}
-            <li><a href="{{ url_for('signup_page') }}">Sign Up</a></li>
-            <li><a href="{{ url_for('login_page') }}">Log in</a></li>
-            {% else %}
-            <li><a href="{{ url_for('my_profile_page') }}">Profile</a></li>
             <li><a href="{{ url_for('home_page') }}">Log out</a></li>
-            {% endif %}
+            <li><a href="{{ url_for('delete_my_account_page') }}/{{ username }}">Delete Account</a></li>
           </ul>
         </nav>
       </div>
@@ -57,27 +50,27 @@
         <ul class="items">
           <li> <img src="static/images/img1.jpg" alt="">
             <div class="banner">
-              <div class="wrapper"><span>“Our<em>Mission</em>is to<em>make</em></span></div>
-              <div class="wrapper"><strong>everyone<em>Happy</em></strong></div>
+              <div class="wrapper"><span>“Our<em>Mission</em>is to<em>Help</em></span></div>
+              <div class="wrapper"><strong>Those Who<em>Need</em>It”</strong></div>
             </div>
           </li>
           <li> <img src="static/images/img2.jpg" alt="">
             <div class="banner">
-              <div class="wrapper"><span>“Make wishes </span></div>
-              <div class="wrapper"><strong>come true”</strong></div>
+              <div class="wrapper"><span>“MAKE all the CHILDREN</span></div>
+              <div class="wrapper"><strong>of the World HAPPY”</strong></div>
             </div>
           </li>
           <li> <img src="static/images/img3.jpg" alt="">
             <div class="banner">
-              <div class="wrapper"><span>“Make a</span></div>
-              <div class="wrapper"><strong>WISH”</strong></div>
+              <div class="wrapper"><span>“TOGETHER we can CHANGE</span></div>
+              <div class="wrapper"><strong>Many Young LIVES”</strong></div>
             </div>
           </li>
         </ul>
         <ul class="pagination">
-          <li id="banner1"><a href="#">Help<span>each other</span></a></li>
+          <li id="banner1"><a href="#">Make<span>Donations</span></a></li>
           <li id="banner2"><a href="#">join<span>volunteer</span></a></li>
-          <li id="banner3"><a href="#">Make<span>requests</span></a></li>
+          <li id="banner3"><a href="#">Help<span>children</span></a></li>
         </ul>
       </div>
     </header>
@@ -85,50 +78,34 @@
     <!-- content -->
     <article id="content">
       <div class="wrapper">
-        <table  style="width:100%; color: seashell; table-layout: fixed;" >
-          <tr>
-              {% if username == currentuser %}
-              <th width="5%"></th>
-              {% endif %}
-              <th>Request Time</th>
-              <th>Request Name</th>
-              <th>Amount</th>
-              <th>Report</th>
-              <th>Name</th>
-              <th>Donate</th>
-            </tr>
-            {% for row in cursor %}
-                <tr>
-                    {% if username == currentuser %}
-                    <td ><label class="Checkbox">
-                        <input type="Checkbox" name="report_keys" style="text-align: center;" value="{{ row[0] }}"/>    </td>
-                    {% endif %}
-                  <td>
-                    <p style=" font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
-                      {{row[2]}}
-                    </p>
-                  </td>
-                  <td>
-                    <button  class="button2 color2" width="160px" type="submit" name="report">
-                      <strong style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"> 
-                       Report</strong></button>   
-                      </td>
-                    {% if username == currentuser %}
-                    <td ><button  class="button2 color2" width="160px" type="submit" name="donate">
-                      <strong style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"> 
-                        Donate</strong></button>   
-                      </td>
-                    {% endif %}
-
-            </tr>
-          {% endfor %}  
-        </table>
+        <div class="box1">
+          <div class="line1">
+            <div class="line2 wrapper">
+              <section class="col1">
+                <h2><strong>T</strong>rue<span>Story 1</span></h2>
+                <div class="pad_bot1">
+                  <figure><img src="static/images/page1_img1.jpg" alt=""></figure>
+                </div>
+                Hope Center is one of free website tem- plates by TemplateMonster.com, opti- mized for 1024X768 res. <a href="#" class="button1">Read More</a> </section>
+              <section class="col1 pad_left1">
+                <h2 class="color2"><strong>T</strong>rue<span>Story 2</span></h2>
+                <div class="pad_bot1">
+                  <figure><img src="static/images/page1_img2.jpg" alt=""></figure>
+                </div>
+                This Hope Center Template goes with two packages – with PSD source files and without them.<a href="#" class="button1 color2">Read More</a> </section>
+              <section class="col1 pad_left1">
+                <h2 class="color3"><strong>T</strong>rue<span>Story 3</span></h2>
+                <div class="pad_bot1">
+                  <figure><img src="static/images/page1_img3.jpg" alt=""></figure>
+                </div>
+                This website template has several pages:<a href="index.html" class="link1">Home</a>,<a href="mission.html" class="link1">Our Mission</a>,<a href="news.html" class="link1">News and Press</a>,<a href="help.html" class="link1">How to Help</a>,<a href="contact.html" class="link1">Contact Us</a>.<a href="#" class="button1 color3">Read More</a> </section>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="wrapper">
         <h3>Our Mission</h3>
-        <p class="quot"> It allows people with limited budgets to donate because there are all kinds of
-          needs in the donate system. Needy people will be able to make a request for their
-          requirements such as food or clothing at that moment.<img src="static/images/quot2.png" alt=""> </p>
+        <p class="quot"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid- idunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerci- tation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.<img src="static/images/quot2.png" alt=""> </p>
       </div>
       <div class="wrapper">
         <div class="box2">
@@ -176,7 +153,7 @@
         </nav>
         <div class="tel"><span>+1 800</span>123 45 67</div>
       </div>
-      <div id="footer_text">Copyright &copy; <a href="#">Donation</a> All Rights Reserved<br></div>
+      <div id="footer_text">Copyright &copy; <a href="#">Domain Name</a> All Rights Reserved<br></div>
     </footer>
     <!-- / footer -->
   </div>

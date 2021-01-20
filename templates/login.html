@@ -34,7 +34,7 @@
 		<div class="container-login100" style="background-image: url('static/images/bg-01.jpg');">
 			<a href="{{ url_for('home_page') }}"><button class="login100-form-btn">Go Back</button></a>
 			<div class="wrap-login100">
-				<form class="login100-form validate-form">
+				<form class="login100-form validate-form" method='POST'>
 					<span class="login100-form-logo">
 						<i class="zmdi zmdi-landscape"></i>
 					</span>
@@ -42,14 +42,35 @@
 					<span class="login100-form-title p-b-34 p-t-27">
 						Log in
 					</span>
-
+					{% with messages = get_flashed_messages() %}
+						{% if messages %}
+							{% if messages[0] == 'Warning!' %}
+							<div class="alert">
+								<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+								<strong>{{ messages[0] }} </strong> {{ messages[1] }} 
+							  </div>
+							{% endif %}
+							{% if messages[0] == 'Info!' %}
+							<div class="alert info">
+								<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+								<strong>{{ messages[0] }} </strong> {{ messages[1] }} 
+							  </div>
+							{% endif %}
+							{% if messages[0] == 'Success!' %}
+							<div class="alert success">
+								<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+								<strong>{{ messages[0] }} </strong> {{ messages[1] }} 
+							  </div>
+							{% endif %}
+						{% endif %}
+						{% endwith %}
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="username" placeholder="Username">
+						<input class="input100" type="text" value="{{username}}" name="username" placeholder="Username" maxlength="25" minlength="2">
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
+						<input class="input100" type="password" value="{{passsword}}" name="password" placeholder="Password" maxlength="16" minlength="8">
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
 

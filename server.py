@@ -64,12 +64,111 @@ def login_page():
     elif request.method == 'POST':
         username = request.form["username"]
         password = request.form["password"]
-        obje = database.Database()
+        obje = database.Donation()
+        cursor=obje.Check_existing_user(username)
+        if len(cursor) != 1:
+            flash("Warning!")
+            flash('Username or password is wrong')
+            return redirect(url_for("login_page"))
+        else:
+            if not hasher.verify(password, cursor[0][1]):
+                flash("Warning!")
+                flash('Username or password is wrong!')
+                return redirect(url_for("login_page"))
+            else:
+                user = get_user_2(cursor[0][0], cursor[0][1])
+                login_user(user, remember=True)
+                next_page = request.args.get("next", url_for("my_profile_page"))
+                return redirect(next_page)
+
+@app.route("/")
+def logout_page():
+    print("1")
+    logout_user()
+    flash("Info!")
+    flash("You have logged out.")
+    return redirect(url_for("home_page"))
+login_manager.init_app(app)
+login_manager.login_view = "login_page"
 
 @app.route("/signup",methods=['GET', 'POST'])
 def signup_page():
     if request.method == 'GET':
         return render_template('signup.html')
+    elif request.method == 'POST':
+        name= request.form["name"]
+        surname= request.form["surname"]
+        email= request.form["email"]
+        password = request.form["password"]
+        register_time = datetime.now()
+       # photo = request.form["photo"]
+        city = request.form["city"]
+        username = request.form["username"]
+        obje = database.Donation()
+        cursor=obje.Check_username(username)
+        print(cursor)
+        if cursor == False:
+            flash("Warning!")
+            flash("Please select a different username!")
+            return redirect(url_for("signup_page"))
+        else:
+            obje.User_Add(name, surname,email, hasher.hash(password), register_time, city, username)
+        flash("Info!")
+        flash("You have crated your account, please login!")
+        return redirect(url_for("login_page"))
+
+@app.route('/profile/request',methods=['GET','POST'])
+@login_required
+def request_page(user_key):
+    obje = database.Donation()
+    if request.method == "POST":
+        report = request.form.get('report')
+        donate = request.form.get('donate')
+        if donate:
+            return redirect(url_for("donate_page"))
+        elif report:
+            form_report_keys = request.form.getlist("report_keys")
+            for form_report_key in form_report_keys:
+                obje.adding_report(int(form_report_key))
+            cursor = obje.Requests(current_user.username)
+            return render_template('index.html',cursor=cursor, username=current_user.username, currentuser=current_user.username)
+    cursor = obje.Request(user_key)
+    return render_template('index.html',cursor=cursor, username=current_user.username, currentuser=current_user.username)
+app.add_url_rule("/profile/request/<user_key>", view_func=request_page)
+
+@app.route('/profile')
+@login_required
+def my_profile_page():
+    return render_template('profile.html', username=current_user.username)
+
+@app.route('/profile')
+@login_required
+def user_key(user_key):
+    if current_user.username == user_key:
+        return redirect(url_for('my_profile_page'))
+    #return render_template("other_profiles.html",username=user_key)
+#app.add_url_rule("/myprofile/<user_key>", view_func=user_key)
+
+@app.route('/profile/delete_account',methods=['GET','POST'])
+@login_required
+def delete_my_account_page(user_key):
+    if user_key == current_user.username:
+        if request.method == 'POST':
+            password = request.form["password"]
+            obje = database.Donation()
+            cursor=obje.Check_existing_user(current_user.username)
+            if not hasher.verify(password, cursor[0][1]):
+                flash("Warning!")
+                flash("Password is wrong!")
+                return redirect(url_for("delete_my_account_page",user_key=current_user.username))
+            else:
+                obje.Delete_account(current_user.username)
+                return redirect(url_for('home_page'))
+        return render_template('delete_account.html',username=user_key)
+    return redirect(url_for("index_page"))
+app.add_url_rule("/profile/delete_account/<user_key>", view_func=delete_my_account_page,methods=['GET','POST'])
+
+
 
 if __name__ == "__main__":
     port = app.config.get("PORT", 8080)

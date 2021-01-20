@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Donate Now | {% block title %}{% endblock %}</title>
+	<title>Donate Now - Delete Account</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -27,53 +27,52 @@
 	<link rel="stylesheet" type="text/css" href="static/css/main.css">
 <!--===============================================================================================-->
 </head>
+
 <body>
 	
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('static/images/bg-01.jpg');">
+			<a href="{{ url_for('my_profile_page') }}"><button class="login100-form-btn">Profile</button></a>
 			<div class="wrap-login100">
-				<form class="login100-form validate-form">
+				<form class="login100-form validate-form" method='POST'>
 					<span class="login100-form-logo">
 						<i class="zmdi zmdi-landscape"></i>
+                    </span>
+                    <span class="login100-form-title p-b-34 p-t-27">
+						Delete Account
 					</span>
+                    <h1>Are you sure about to delete your account?</h1>
+                              <br>
+                              {% with messages = get_flashed_messages() %}
+                              {% if messages %}
+                                  {% if messages[0] == 'Warning!' %}
+                                  <div class="alert">
+                                      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                                      <strong>{{ messages[0] }} </strong> {{ messages[1] }} 
+                                    </div>
+                                  {% endif %}
+                              {% endif %}
+                              {% endwith %}
 
-					<span class="login100-form-title p-b-34 p-t-27">
-						Sign Up
-					</span>
-
-					<div class="wrap-input100 validate-input" data-validate = "Enter username">
-						<input class="input100" type="text" name="username" placeholder="Username">
-						<span class="focus-input100" data-placeholder="&#xf207;"></span>
-					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
+                        <p>passsword: </p>
+                        <br>
+						<input class="input100" type="password" value="{{passsword}}" name="password" placeholder="Password" maxlength="16" minlength="8">
 						<span class="focus-input100" data-placeholder="&#xf191;"></span>
 					</div>
 
-					<div class="contact100-form-checkbox">
-						<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-						<label class="label-checkbox100" for="ckb1">
-							Remember me
-						</label>
-					</div>
 
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
-							Sign Up
+							Delete
 						</button>
 					</div>
 
-					<div class="text-center p-t-90">
-						<a class="txt1" href="#">
-							Forgot Password?
-						</a>
-					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	
 
 	<div id="dropDownSelect1"></div>
 	
