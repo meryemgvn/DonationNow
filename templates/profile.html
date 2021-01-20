@@ -42,6 +42,7 @@
           <ul id="menu">
             <li id="menu_active"><a href="{{ url_for('index_page') }}">Home</a></li>
             <li><a href="{{ url_for('home_page') }}">Log out</a></li>
+            <li><a href="{{ url_for('request_page') }}/{{ username }}">Requests</a></li>
             <li><a href="{{ url_for('delete_my_account_page') }}/{{ username }}">Delete Account</a></li>
           </ul>
         </nav>
@@ -78,57 +79,65 @@
     <!-- content -->
     <article id="content">
       <div class="wrapper">
-        <div class="box1">
-          <div class="line1">
-            <div class="line2 wrapper">
-              <section class="col1">
-                <h2><strong>T</strong>rue<span>Story 1</span></h2>
-                <div class="pad_bot1">
-                  <figure><img src="static/images/page1_img1.jpg" alt=""></figure>
-                </div>
-                Hope Center is one of free website tem- plates by TemplateMonster.com, opti- mized for 1024X768 res. <a href="#" class="button1">Read More</a> </section>
-              <section class="col1 pad_left1">
-                <h2 class="color2"><strong>T</strong>rue<span>Story 2</span></h2>
-                <div class="pad_bot1">
-                  <figure><img src="static/images/page1_img2.jpg" alt=""></figure>
-                </div>
-                This Hope Center Template goes with two packages – with PSD source files and without them.<a href="#" class="button1 color2">Read More</a> </section>
-              <section class="col1 pad_left1">
-                <h2 class="color3"><strong>T</strong>rue<span>Story 3</span></h2>
-                <div class="pad_bot1">
-                  <figure><img src="static/images/page1_img3.jpg" alt=""></figure>
-                </div>
-                This website template has several pages:<a href="index.html" class="link1">Home</a>,<a href="mission.html" class="link1">Our Mission</a>,<a href="news.html" class="link1">News and Press</a>,<a href="help.html" class="link1">How to Help</a>,<a href="contact.html" class="link1">Contact Us</a>.<a href="#" class="button1 color3">Read More</a> </section>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="wrapper">
-        <h3>Our Mission</h3>
-        <p class="quot"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incid- idunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerci- tation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.<img src="static/images/quot2.png" alt=""> </p>
-      </div>
-      <div class="wrapper">
-        <div class="box2">
-          <div class="line1">
-            <div class="line2 wrapper">
-              <section class="col1">
-                <h4><span>June 31</span>2011</h4>
-                <p class="pad_bot2"><strong>Ned ut perspiciatis unde omnis</strong></p>
-                <p>Natus error sit voluptatem accusantium doloremque laudantium.</p>
-                <a href="#" class="button2">Read More</a> </section>
-              <section class="col1 pad_left1">
-                <h4 class="color2"><span>June 29</span>2011</h4>
-                <p class="pad_bot2"><strong>At veroeos et accusamus etiusto</strong></p>
-                <p>Architecto beatae vitae dicta sunt explicabo emo enim ipsam.</p>
-                <a href="#" class="button2 color2">Read More</a> </section>
-              <section class="col1 pad_left1">
-                <h4 class="color3"><span>June 17</span>2011</h4>
-                <p class="pad_bot2"><strong>Temporibus quibusdam</strong></p>
-                <p>Magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                <a href="#" class="button2 color3">Read More</a> </section>
-            </div>
-          </div>
-        </div>
+        <table  style="width:100%; color: seashell; table-layout: fixed;" >
+          <tr>
+              {% if username == currentuser %}
+              <th width="5%"></th>
+              {% endif %}
+              <th>Request Time</th>
+              <th>Request Name</th>
+              <th>Amount</th>
+              <th>Report Size</th>
+              <th>Name</th>
+              <th>Donate</th>
+            </tr>
+            {% for row in cursor %}
+            <tr>
+              {% if username == currentuser %}
+              <td ><label class="Checkbox">
+                  <input style="text-align: center;" type="Checkbox" name="report_keys" style="text-align: center;" value="{{ row[0] }}"/>    </td>
+              {% endif %}
+            <td>
+              <p style="color: #29ca8e; font-size: 16px; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                {{row[2]}}
+              </p>
+            </td>
+            <td>
+              <p style="color: #29ca8e; font-size: 16px; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                {{row[3]}}
+              </p>
+            </td>
+            <td>
+              <p style="color: #29ca8e; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                {{row[4]}}
+              </p>
+            </td>
+            <td>
+              <p style="color: #29ca8e; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                {{row[5]}}
+              </p>
+            </td>
+            <td>
+              <p style="color: #29ca8e; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                {{row[6]}}
+              </p>
+            </td>
+              
+              <td ><button  class="button2 color2" width="160px" type="submit" name="donate">
+                <strong style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"> 
+                  Donate</strong></button>   
+                </td>
+             
+
+      </tr>
+          {% endfor %}  
+        </table>
+       
+                <br>
+            <button  class="button2 color2" width="160px" type="submit" name="report">
+              <strong style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"> 
+               Report</strong></button>   
+              
       </div>
     </article>
     <!-- / content -->

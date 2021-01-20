@@ -40,7 +40,9 @@ def home_page():
 
 @app.route("/index",methods=['GET', 'POST'])
 def index_page():
-    return render_template("index.html", day=day_name)
+    obje = database.Donation()
+    cursor = obje.All_request()
+    return render_template("index.html", day=day_name, cursor=cursor)
 
 
 
@@ -122,19 +124,40 @@ def signup_page():
 def request_page(user_key):
     obje = database.Donation()
     if request.method == "POST":
-        report = request.form.get('report')
-        donate = request.form.get('donate')
-        if donate:
-            return redirect(url_for("donate_page"))
-        elif report:
-            form_report_keys = request.form.getlist("report_keys")
-            for form_report_key in form_report_keys:
-                obje.adding_report(int(form_report_key))
-            cursor = obje.Requests(current_user.username)
-            return render_template('index.html',cursor=cursor, username=current_user.username, currentuser=current_user.username)
-    cursor = obje.Request(user_key)
-    return render_template('index.html',cursor=cursor, username=current_user.username, currentuser=current_user.username)
+        #report = request.form.get('buttonName')
+        #donate = request.form.get('buttonName')
+        add = request.form.get('buttonName')
+        #if donate== "donate":
+            #return redirect(url_for("donate_page"))
+       # elif report== "report":
+            #form_report_keys = request.form.getlist("report_keys")
+           # for form_report_key in form_report_keys:
+               # obje.adding_report(int(form_report_key))
+            #cursor = obje.Requests(current_user.username)
+            #return render_template('index.html',cursor=cursor, username=current_user.username, currentuser=current_user.username)
+        if add == "adding":
+            return redirect(url_for("request_adding_page"))
+    cursor = obje.Requests(user_key)
+    return render_template('requests.html',cursor=cursor, username=current_user.username, currentuser=current_user.username)
 app.add_url_rule("/profile/request/<user_key>", view_func=request_page)
+
+@app.route('/profile/request/add',methods=['GET','POST'])
+@login_required
+def request_adding_page():
+    obje = database.Donation()
+    if request.method == 'GET':
+        return render_template('add_request.html')
+    elif request.method == 'POST':
+        req_name = str(request.form["req_name"])
+        amount = request.form["amount"]
+        req_time= datetime.now()
+        obje.request_add(current_user.username,req_time,req_name,amount)
+        flash("You have added.")
+        return redirect(url_for('request_page', user_key=current_user.username ))
+    return render_template('add_request.html')
+app.add_url_rule("/profile/request/<user_key>", view_func=request_page,methods=['GET','POST'])
+
+
 
 @app.route('/profile')
 @login_required
@@ -173,31 +196,4 @@ app.add_url_rule("/profile/delete_account/<user_key>", view_func=delete_my_accou
 if __name__ == "__main__":
     port = app.config.get("PORT", 8080)
     app.run(host="127.0.0.1", port=port)
-"""
-app = Flask(__name__)
 
-@app.route("/")
-def home_page():
-
-    return render_template("index.html", day=day_name)
-
-@app.route("/login")
-def login_page():
-
-    return render_template("login.html",day=day_name)
-
-@app.route("/signup")
-def signup_page():
-    
-    return render_template("signup.html",day=day_name)
-"""
-
-
-"""
-conn = psycopg2.connect(dbname= "postgres", user="postgres", password="0000", port="5432", host="localhost")
-cursor = conn.cursor()
-cursor.execute("DROP TABLE Users; ")
-conn.commit()
-cursor.close()
-conn.close()
-"""

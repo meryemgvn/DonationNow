@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="static/css/reset.css" type="text/css" media="all">
 <link rel="stylesheet" href="static/css/layout.css" type="text/css" media="all">
 <link rel="stylesheet" href="static/css/style.css" type="text/css" media="all">
+<link rel="stylesheet" href="static/css/table.css" type="text/css" media="all">
 <script type="text/javascript" src="static/js/jquery-1.6.js"></script>
 <script type="text/javascript" src="static/js/cufon-yui.js"></script>
 <script type="text/javascript" src="static/js/cufon-replace.js"></script>
@@ -33,8 +34,6 @@
         <nav>
           <ul id="top_nav">
             <li><p>{{ day }}</p></li>
-            <li><a href="index"><img src="static/images/top_icon1.gif" alt=""></a></li>
-            <li><a href="#"><img src="static/images/top_icon2.gif" alt=""></a></li>
             
           </ul>
         </nav>
@@ -93,65 +92,63 @@
               <th>Request Time</th>
               <th>Request Name</th>
               <th>Amount</th>
-              <th>Report</th>
+              <th>Report Size</th>
               <th>Name</th>
               <th>Donate</th>
             </tr>
             {% for row in cursor %}
-                <tr>
-                    {% if username == currentuser %}
-                    <td ><label class="Checkbox">
-                        <input type="Checkbox" name="report_keys" style="text-align: center;" value="{{ row[0] }}"/>    </td>
-                    {% endif %}
-                  <td>
-                    <p style=" font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
-                      {{row[2]}}
-                    </p>
-                  </td>
-                  <td>
-                    <button  class="button2 color2" width="160px" type="submit" name="report">
-                      <strong style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"> 
-                       Report</strong></button>   
-                      </td>
-                    {% if username == currentuser %}
-                    <td ><button  class="button2 color2" width="160px" type="submit" name="donate">
-                      <strong style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"> 
-                        Donate</strong></button>   
-                      </td>
-                    {% endif %}
+            <tr>
+              {% if username == currentuser %}
+              <td ><label class="Checkbox">
+                  <input style="text-align: center;" type="Checkbox" name="report_keys" style="text-align: center;" value="{{ row[0] }}"/>    </td>
+              {% endif %}
+            <td>
+              <p style="color: #29ca8e; font-size: 16px; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                {{row[2]}}
+              </p>
+            </td>
+            <td>
+              <p style="color: #29ca8e; font-size: 16px; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                {{row[3]}}
+              </p>
+            </td>
+            <td>
+              <p style="color: #29ca8e; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                {{row[4]}}
+              </p>
+            </td>
+            <td>
+              <p style="color: #29ca8e; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                {{row[5]}}
+              </p>
+            </td>
+            <td>
+              <p style="color: #29ca8e; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                {{row[6]}}
+              </p>
+            </td>
+              
+              <td ><button  class="button2 color2" width="160px" type="submit" name="donate">
+                <strong style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"> 
+                  Donate</strong></button>   
+                </td>
+             
 
-            </tr>
+      </tr>
           {% endfor %}  
         </table>
+       
+                <br>
+            <button  class="button2 color2" width="160px" type="submit" name="report">
+              <strong style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"> 
+               Report</strong></button>   
+              
       </div>
       <div class="wrapper">
         <h3>Our Mission</h3>
         <p class="quot"> It allows people with limited budgets to donate because there are all kinds of
           needs in the donate system. Needy people will be able to make a request for their
           requirements such as food or clothing at that moment.<img src="static/images/quot2.png" alt=""> </p>
-      </div>
-      <div class="wrapper">
-        <div class="box2">
-          <div class="line1">
-            <div class="line2 wrapper">
-              <section class="col1">
-                <h4><span>June 31</span>2011</h4>
-                <p class="pad_bot2"><strong>Ned ut perspiciatis unde omnis</strong></p>
-                <p>Natus error sit voluptatem accusantium doloremque laudantium.</p>
-                <a href="#" class="button2">Read More</a> </section>
-              <section class="col1 pad_left1">
-                <h4 class="color2"><span>June 29</span>2011</h4>
-                <p class="pad_bot2"><strong>At veroeos et accusamus etiusto</strong></p>
-                <p>Architecto beatae vitae dicta sunt explicabo emo enim ipsam.</p>
-                <a href="#" class="button2 color2">Read More</a> </section>
-              <section class="col1 pad_left1">
-                <h4 class="color3"><span>June 17</span>2011</h4>
-                <p class="pad_bot2"><strong>Temporibus quibusdam</strong></p>
-                <p>Magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                <a href="#" class="button2 color3">Read More</a> </section>
-            </div>
-          </div>
-        </div>
       </div>
     </article>
     <!-- / content -->

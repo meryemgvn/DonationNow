@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Requests</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="static/css/reset.css" type="text/css" media="all">
+<link rel="stylesheet" href="static/css/layout.css" type="text/css" media="all">
+<link rel="stylesheet" href="static/css/style.css" type="text/css" media="all">
+<link rel="stylesheet" href="static/css/table.css" type="text/css" media="all">
+<script type="text/javascript" src="static/js/jquery-1.6.js"></script>
+<script type="text/javascript" src="static/js/cufon-yui.js"></script>
+<script type="text/javascript" src="static/js/cufon-replace.js"></script>
+<script type="text/javascript" src="static/js/Vegur_700.font.js"></script>
+<script type="text/javascript" src="static/js/Vegur_400.font.js"></script>
+<script type="text/javascript" src="static/js/Vegur_300.font.js"></script>
+<script type="text/javascript" src="static/js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="static/js/tms-0.3.js"></script>
+<script type="text/javascript" src="static/js/tms_presets.js"></script>
+<script type="text/javascript" src="static/js/backgroundPosition.js"></script>
+<script type="text/javascript" src="static/js/atooltip.jquery.js"></script>
+<script type="text/javascript" src="static/js/script.js"></script>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="js/html5.js"></script>
+<style type="text/css">.box1 figure{behavior:url("js/PIE.htc");}</style>
+<![endif]-->
+<style>
+    /* Background-color of the odd rows */
+    body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.42em;
+    color:#A7A1AE;
+    background-color:#f1e0e06e;
+  }
+
+  @media (max-width: 800px) {
+    .graphbutton{
+      width: 130px;
+    }
+  }
+    
+</style>
+</head>
+<body id="page1">
+<div class="body1">
+  <div class="main">
+    <!-- header -->
+    <header>
+      <div class="wrapper">
+       
+        <nav>
+          <ul id="top_nav">
+            <li><p>{{ day }}</p></li>
+            
+          </ul>
+        </nav>
+        <nav>
+          <a href="{{ url_for('index_page') }}" ><img src="static/images/logo.png" style="height: 100px; width: 144px; float: left; margin-bottom: 30px;" alt="donate"></a>
+          <ul id="menu">
+            <li id="menu_active"><a href="{{ url_for('index_page') }}">Home</a></li>
+            
+            {% if not current_user.is_authenticated %}
+            <li><a href="{{ url_for('signup_page') }}">Sign Up</a></li>
+            <li><a href="{{ url_for('login_page') }}">Log in</a></li>
+            {% else %}
+            <li><a href="{{ url_for('my_profile_page') }}">Profile</a></li>
+            <li><a href="{{ url_for('home_page') }}">Log out</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <!-- / header -->
+    <!-- content -->
+    <article id="content">
+      <div class="wrapper">
+        <table >
+          <tr>
+              {% if username == currentuser %}
+              <th width="5%"></th>
+              {% endif %}
+              <th>Report</th>
+              <th>Request Time</th>
+              <th>Request Name</th>
+              <th>Amount</th>
+              <th>Report Size</th>
+              <th>Name</th>
+              <th>Donate</th>
+            </tr>
+            {% for row in cursor %}
+                <tr>
+                    {% if username == currentuser %}
+                    <td ><label class="Checkbox">
+                        <input style="text-align: center;" type="Checkbox" name="report_keys" style="text-align: center;" value="{{ row[0] }}"/>    </td>
+                    {% endif %}
+                  <td>
+                    <p style="color: #29ca8e; font-size: 16px; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                      {{row[2]}}
+                    </p>
+                  </td>
+                  <td>
+                    <p style="color: #29ca8e; font-size: 16px; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                      {{row[3]}}
+                    </p>
+                  </td>
+                  <td>
+                    <p style="color: #29ca8e; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                      {{row[4]}}
+                    </p>
+                  </td>
+                  <td>
+                    <p style="color: #29ca8e; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                      {{row[5]}}
+                    </p>
+                  </td>
+                  <td>
+                    <p style="color: #29ca8e; font-size: 16px; font-size: 16px; overflow-wrap: break-word; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
+                      {{row[6]}}
+                    </p>
+                  </td>
+                    {% if username == currentuser %}
+                    <td ><button  class="button2 color2" width="160px" type="submit" name="donate">
+                      <strong style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"> 
+                        Donate</strong></button>   
+                      </td>
+                    {% endif %}
+
+            </tr>
+          {% endfor %}  
+        </table>
+        {% if username == currentuser %}
+                <br>
+            <button  class="button2 color2" width="160px" type="submit" name="report">
+              <strong style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"> 
+               Report</strong></button>   
+               
+            <button class="w3-button w3-blue w3-round" style="float: right;" name="buttonName" value="adding">Add Request</button><br>
+      {% endif %}
+    </div>
+   
+    </article>
+    <!-- / content -->
+    <!-- footer -->
+    <footer>
+      <div class="wrapper"> <a href="index.html" id="footer_logo"><span>Donate</span>Now</a>
+        <ul id="icons">
+          <li><a href="#" class="normaltip"><img src="static/images/icon1.gif" alt=""></a></li>
+          <li><a href="#" class="normaltip"><img src="static/images/icon2.gif" alt=""></a></li>
+          <li><a href="#" class="normaltip"><img src="static/images/icon3.gif" alt=""></a></li>
+        </ul>
+      </div>
+      <div class="wrapper">
+        <nav>
+          <ul id="footer_menu">
+            <li class="active"><a href="index.html">Home</a></li>
+            <li><a href="mission.html">Our Mission</a></li>
+            <li><a href="news.html">News &amp; Press</a></li>
+            <li><a href="help.html">How to Help</a></li>
+            <li class="end"><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="tel"><span>+1 800</span>123 45 67</div>
+      </div>
+      <div id="footer_text">Copyright &copy; <a href="#">Donation</a> All Rights Reserved<br></div>
+    </footer>
+    <!-- / footer -->
+  </div>
+</div>
+<script type="text/javascript">Cufon.now();</script>
+<script type="text/javascript">
+</script>
+</body>
+</html>

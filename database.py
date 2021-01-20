@@ -43,7 +43,26 @@ class Donation:
 	def Requests(self,username):
 		with dbapi.connect(url) as connection:
 			with connection.cursor() as cursor:
-				statement = """Select requests.req_id, userid, requests.req_time From users left join requests on requests.userid=users.userid where username=%s;"""
+				statement = """Select req_id, requests.userid, req_time, req_name, amount, report,users.username From requests left join users on users.userid=requests.userid where users.username=%s and is_paid='0';"""
 				cursor.execute(statement,([username]))
 				cursor_list=cursor.fetchall()
 				return cursor_list
+	
+	def All_request(self):
+			with dbapi.connect(url) as connection:
+				with connection.cursor() as cursor:
+					statement = """Select req_id, requests.userid, req_time, req_name, amount, report,users.username From requests left join users on users.userid=requests.userid where is_paid='0';"""
+					cursor.execute(statement)
+					cursor_list=cursor.fetchall()
+					return cursor_list
+
+	def request_add(self,username,req_time, req_name, amount):
+			with dbapi.connect(url) as connection:
+				with connection.cursor() as cursor:
+					statement0 = """Select userid FROM users Where username=%s;"""
+					cursor.execute(statement0)
+					userid = cursor_list=cursor.fetchall()
+					statement = """INSERT INTO requests (userid, req_time, req_name, amount) VALUES(%s) Where username = %s;"""
+					cursor.execute(statement,([userid,req_time,req_name,amount]))
+					cursor_list=cursor.fetchall()
+					return cursor_list
